@@ -1,5 +1,6 @@
 import string
 import random
+import requests
 
 class Game:
     def __init__(self) -> list:
@@ -21,4 +22,10 @@ class Game:
                 game_grid.pop(idx)
             else:
                 return False
-        return True
+        return self.check_word(word)
+
+    @staticmethod
+    def check_word(word):
+        dict_url= f"https://wagon-dictionary.herokuapp.com/{word}"
+        result= requests.get(dict_url).json()
+        return result['found']
